@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenMovers — Big or Small, We Move It All</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #1BBDB6;
+      --teal-dark: #17A8A1;
+      --orange: #E8572A;
+      --beige: #C8BCA8;
+      --hero-bg: #C4B9A5;
+      --dark: #2D2D2D;
+      --darker: #1E1E1E;
+      --text: #444444;
+      --text-light: #777777;
+      --white: #ffffff;
+      --light-bg: #F5F5F3;
+      --font-head: 'Montserrat', sans-serif;
+      --font-body: 'Open Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid #e8e8e4;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo img { height: 52px; }
+    .nav-logo-text {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--dark);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-logo-text span { color: var(--orange); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: 0.03em;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta-btn {
+      background: var(--teal);
+      color: var(--white);
+      border: none;
+      padding: 10px 24px;
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 2px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .nav-cta-btn:hover { background: var(--teal-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--hero-bg);
+      min-height: 540px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 60px 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left { padding-right: 40px; padding-bottom: 60px; }
+    .hero-eyebrow {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      opacity: 0.7;
+    }
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(42px, 5vw, 72px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .hero-title .or { color: var(--orange); font-style: italic; }
+    .hero-tagline {
+      font-family: var(--font-head);
+      font-size: clamp(16px, 2vw, 22px);
+      font-weight: 700;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--dark);
+      opacity: 0.75;
+      max-width: 420px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+    .btn-teal {
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      padding: 13px 28px;
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-teal:hover { background: var(--teal-dark); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--dark);
+      border: 2px solid var(--dark);
+      padding: 11px 28px;
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-outline:hover { background: var(--dark); color: #fff; }
+
+    .google-rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .google-logo {
+      width: 20px; height: 20px;
+      background: #4285F4;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #fff;
+    }
+    .stars-orange { color: #FBBC05; font-size: 16px; letter-spacing: 1px; }
+    .google-rating span { font-size: 13px; color: var(--dark); font-weight: 600; }
+
+    .hero-right {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+      height: 100%;
+      min-height: 440px;
+    }
+
+    /* Illustration placeholder — bear + truck */
+    .hero-illustration {
+      width: 100%;
+      height: 420px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+    }
+    .truck-body {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 340px;
+      height: 160px;
+    }
+    .bear-figure {
+      position: absolute;
+      bottom: 80px;
+      right: 120px;
+      width: 140px;
+      height: 220px;
+    }
+    .skyline {
+      position: absolute;
+      bottom: 155px;
+      right: 0;
+      width: 340px;
+      opacity: 0.25;
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: var(--dark);
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 3px solid var(--teal);
+    }
+    .trust-item {
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .trust-item:last-child { border-right: none; }
+    .trust-icon { color: var(--teal); font-size: 24px; }
+    .trust-text strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.03em;
+    }
+    .trust-text span { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+    /* ── HOW IT WORKS ── */
+    .how-section {
+      background: var(--teal);
+      padding: 56px 48px;
+    }
+    .how-section h2 {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .how-step {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .step-circle {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .how-step-text h3 {
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .how-step-text p { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+
+    /* ── SERVICES ── */
+    .services-section { padding: 80px 48px; }
+    .section-eyebrow {
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+    .section-heading {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 900;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+      margin-bottom: 56px;
+      line-height: 1.1;
+    }
+    .section-heading span { color: var(--orange); }
+
+    .service-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 56px 0;
+      border-top: 1px solid #e8e8e4;
+    }
+    .service-block.reverse { direction: rtl; }
+    .service-block.reverse > * { direction: ltr; }
+    .service-tag {
+      display: inline-block;
+      background: var(--teal);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+    }
+    .service-title {
+      font-family: var(--font-head);
+      font-size: clamp(26px, 2.5vw, 36px);
+      font-weight: 900;
+      color: var(--orange);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .service-desc {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      max-width: 420px;
+    }
+    .service-visual {
+      background: var(--light-bg);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-visual-inner {
+      text-align: center;
+      padding: 40px;
+    }
+    .service-visual-icon {
+      font-size: 72px;
+      margin-bottom: 12px;
+    }
+    .service-visual-label {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    /* Accent stripes */
+    .service-visual::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 5px; height: 100%;
+      background: var(--teal);
+    }
+
+    /* ── STATS ── */
+    .stats-section {
+      background: var(--light-bg);
+      padding: 64px 48px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background-color: #e0e0dc;
+    }
+    .stat-box {
+      background: var(--white);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .stat-big {
+      font-family: var(--font-head);
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--teal);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section { padding: 80px 48px; }
+    .testimonials-section h2 {
+      font-family: var(--font-head);
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 900;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+      margin-bottom: 48px;
+      text-align: center;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .tcard {
+      background: var(--light-bg);
+      border-top: 3px solid var(--teal);
+      padding: 32px;
+    }
+    .tcard .stars { color: #FBBC05; font-size: 14px; margin-bottom: 14px; }
+    .tcard .quote {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .tcard .author {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .tcard .author-loc { font-size: 12px; color: var(--text-light); font-weight: 400; }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      background: var(--dark);
+      padding: 80px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+    }
+    .cta-band h2 {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .cta-band h2 span { color: var(--teal); }
+    .cta-band p { font-size: 15px; color: rgba(255,255,255,0.55); margin-top: 12px; }
+    .btn-teal-lg {
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      padding: 18px 44px;
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      border-radius: 2px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .btn-teal-lg:hover { background: var(--teal-dark); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--darker);
+      padding: 64px 48px 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand .logo-text {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .footer-brand .logo-text span { color: var(--orange); }
+    .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.75; max-width: 220px; }
+    .footer-col h4 {
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 18px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover { color: #fff; }
+    .footer-bottom {
+      background: var(--orange);
+      margin: 0 -48px;
+      padding: 16px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.85); font-family: var(--font-head); font-weight: 600; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-left.animate > * { animation: fadeUp 0.6s ease forwards; }
+    .hero-left.animate .hero-eyebrow { animation-delay: 0.05s; }
+    .hero-left.animate .hero-title { animation-delay: 0.15s; }
+    .hero-left.animate .hero-tagline { animation-delay: 0.25s; }
+    .hero-left.animate .hero-sub { animation-delay: 0.35s; }
+    .hero-left.animate .hero-btns { animation-delay: 0.45s; }
+    .hero-left.animate .google-rating { animation-delay: 0.55s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo-text">Open<span>Movers</span></a>
+    <ul class="nav-links">
+      <li><a href="#services">Our Services</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <a href="#quote" class="nav-cta-btn">Free Quote</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Toronto's Moving Specialists</div>
+      <h1 class="hero-title">BIG <span class="or">OR</span><br>SMALL</h1>
+      <div class="hero-tagline">We Move It All</div>
+      <p class="hero-sub">
+        From studio apartments to full office relocations — OpenMovers handles every move with care, speed, and total transparency. No hidden fees. Ever.
+      </p>
+      <div class="hero-btns">
+        <a href="#quote" class="btn-teal">Get a Free Quote</a>
+        <a href="#services" class="btn-outline">Our Services</a>
+      </div>
+      <div class="google-rating">
+        <div class="google-logo">G</div>
+        <span class="stars-orange">★★★★★</span>
+        <span>4.9 / 5 — 600+ Google Reviews</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-illustration">
+        <!-- Skyline silhouette -->
+        <svg class="skyline" viewBox="0 0 340 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="60" width="20" height="60" fill="#2D2D2D"/>
+          <rect x="22" y="40" width="16" height="80" fill="#2D2D2D"/>
+          <rect x="40" y="50" width="24" height="70" fill="#2D2D2D"/>
+          <rect x="66" y="20" width="18" height="100" fill="#2D2D2D"/>
+          <rect x="70" y="10" width="10" height="15" fill="#2D2D2D"/>
+          <rect x="86" y="45" width="30" height="75" fill="#2D2D2D"/>
+          <rect x="118" y="35" width="14" height="85" fill="#2D2D2D"/>
+          <rect x="134" y="55" width="22" height="65" fill="#2D2D2D"/>
+          <rect x="158" y="25" width="28" height="95" fill="#2D2D2D"/>
+          <rect x="162" y="15" width="6" height="14" fill="#2D2D2D"/>
+          <rect x="188" y="50" width="18" height="70" fill="#2D2D2D"/>
+          <rect x="208" y="40" width="26" height="80" fill="#2D2D2D"/>
+          <rect x="236" y="55" width="20" height="65" fill="#2D2D2D"/>
+          <rect x="258" y="30" width="16" height="90" fill="#2D2D2D"/>
+          <rect x="276" y="50" width="28" height="70" fill="#2D2D2D"/>
+          <rect x="306" y="42" width="18" height="78" fill="#2D2D2D"/>
+          <rect x="326" y="58" width="14" height="62" fill="#2D2D2D"/>
+        </svg>
+
+        <!-- Moving Truck SVG -->
+        <svg class="truck-body" viewBox="0 0 340 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Truck body -->
+          <rect x="0" y="30" width="230" height="100" rx="4" fill="#E8572A"/>
+          <rect x="2" y="32" width="226" height="96" rx="3" fill="#EC6B40"/>
+          <!-- Truck cab -->
+          <rect x="230" y="55" width="90" height="75" rx="4" fill="#2D2D2D"/>
+          <rect x="232" y="57" width="86" height="71" rx="3" fill="#383838"/>
+          <!-- Windshield -->
+          <rect x="238" y="62" width="56" height="38" rx="2" fill="#1BBDB6" opacity="0.5"/>
+          <line x1="266" y1="62" x2="266" y2="100" stroke="#1BBDB6" stroke-width="1" opacity="0.3"/>
+          <!-- Cab window -->
+          <rect x="238" y="104" width="24" height="16" rx="1" fill="#555"/>
+          <!-- Door line -->
+          <line x1="285" y1="57" x2="285" y2="130" stroke="#2D2D2D" stroke-width="2"/>
+          <!-- Wheels -->
+          <circle cx="70" cy="136" r="26" fill="#2D2D2D"/>
+          <circle cx="70" cy="136" r="18" fill="#444"/>
+          <circle cx="70" cy="136" r="8" fill="#666"/>
+          <circle cx="200" cy="136" r="26" fill="#2D2D2D"/>
+          <circle cx="200" cy="136" r="18" fill="#444"/>
+          <circle cx="200" cy="136" r="8" fill="#666"/>
+          <circle cx="290" cy="136" r="22" fill="#2D2D2D"/>
+          <circle cx="290" cy="136" r="15" fill="#444"/>
+          <circle cx="290" cy="136" r="6" fill="#666"/>
+          <!-- Logo on truck -->
+          <text x="80" y="90" fill="white" font-family="Montserrat,sans-serif" font-size="14" font-weight="900" opacity="0.9">OPENMOVERS</text>
+          <!-- Ground line -->
+          <line x1="0" y1="158" x2="340" y2="158" stroke="#8B7D6B" stroke-width="3"/>
+        </svg>
+
+        <!-- Bear mascot placeholder -->
+        <svg class="bear-figure" viewBox="0 0 140 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Body -->
+          <ellipse cx="70" cy="145" rx="45" ry="55" fill="#C49A6C"/>
+          <ellipse cx="70" cy="145" rx="42" ry="52" fill="#D4AA80"/>
+          <!-- Belly -->
+          <ellipse cx="70" cy="158" rx="26" ry="32" fill="#E8C99A"/>
+          <!-- Head -->
+          <circle cx="70" cy="72" r="48" fill="#C49A6C"/>
+          <circle cx="70" cy="72" r="45" fill="#D4AA80"/>
+          <!-- Ears -->
+          <circle cx="30" cy="36" r="18" fill="#C49A6C"/>
+          <circle cx="30" cy="36" r="12" fill="#B8895A"/>
+          <circle cx="110" cy="36" r="18" fill="#C49A6C"/>
+          <circle cx="110" cy="36" r="12" fill="#B8895A"/>
+          <!-- Face -->
+          <ellipse cx="70" cy="82" rx="24" ry="18" fill="#E8C99A"/>
+          <circle cx="57" cy="65" r="7" fill="#2D2D2D"/>
+          <circle cx="83" cy="65" r="7" fill="#2D2D2D"/>
+          <circle cx="59" cy="63" r="2" fill="white"/>
+          <circle cx="85" cy="63" r="2" fill="white"/>
+          <ellipse cx="70" cy="82" rx="12" ry="8" fill="#C49A6C"/>
+          <circle cx="70" cy="84" r="5" fill="#2D2D2D"/>
+          <!-- Sunglasses -->
+          <rect x="49" y="60" width="18" height="12" rx="3" fill="#1BBDB6" opacity="0.85"/>
+          <rect x="73" y="60" width="18" height="12" rx="3" fill="#1BBDB6" opacity="0.85"/>
+          <line x1="67" y1="66" x2="73" y2="66" stroke="#0D8C87" stroke-width="2"/>
+          <line x1="44" y1="66" x2="49" y2="66" stroke="#0D8C87" stroke-width="1.5"/>
+          <line x1="91" y1="66" x2="96" y2="66" stroke="#0D8C87" stroke-width="1.5"/>
+          <!-- Hat -->
+          <rect x="42" y="28" width="56" height="10" rx="2" fill="#2D2D2D"/>
+          <rect x="50" y="10" width="40" height="22" rx="3" fill="#2D2D2D"/>
+          <!-- T-shirt collar -->
+          <path d="M50 175 Q70 165 90 175" stroke="#1BBDB6" stroke-width="3" fill="none"/>
+          <!-- Arms -->
+          <ellipse cx="22" cy="165" rx="16" ry="30" fill="#C49A6C" transform="rotate(-15 22 165)"/>
+          <ellipse cx="118" cy="165" rx="16" ry="30" fill="#C49A6C" transform="rotate(15 118 165)"/>
+          <!-- Box in arms -->
+          <rect x="88" y="145" width="38" height="32" rx="2" fill="#E8C99A" stroke="#C49A6C" stroke-width="1.5"/>
+          <line x1="107" y1="145" x2="107" y2="177" stroke="#C49A6C" stroke-width="1"/>
+          <line x1="88" y1="161" x2="126" y2="161" stroke="#C49A6C" stroke-width="1"/>
+          <!-- Legs -->
+          <ellipse cx="54" cy="205" rx="18" ry="18" fill="#C49A6C"/>
+          <ellipse cx="86" cy="205" rx="18" ry="18" fill="#C49A6C"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item">
+      <div class="trust-icon">✓</div>
+      <div class="trust-text">
+        <strong>Fully Licensed & Insured</strong>
+        <span>WSIB Certified Movers</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">★</div>
+      <div class="trust-text">
+        <strong>4.9★ Google Rating</strong>
+        <span>600+ Verified Reviews</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">⏱</div>
+      <div class="trust-text">
+        <strong>On-Time Guarantee</strong>
+        <span>Or your first hour is free</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">$</div>
+      <div class="trust-text">
+        <strong>No Hidden Fees</strong>
+        <span>Flat-rate transparent pricing</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how">
+    <h2>Moving Has Never Been This Simple</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-circle">1</div>
+        <div class="how-step-text">
+          <h3>Get a Free Quote</h3>
+          <p>Fill out our quick form online or call us. We'll send you a flat-rate price within 30 minutes — no surprises.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-circle">2</div>
+        <div class="how-step-text">
+          <h3>We Pack & Load</h3>
+          <p>Our trained crew arrives on time with everything needed. We protect your floors, wrap your furniture, and load with care.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-circle">3</div>
+        <div class="how-step-text">
+          <h3>Settle In & Relax</h3>
+          <p>We unload, place every item exactly where you want it, and do a final walkthrough. You're home — stress-free.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-eyebrow">Services for Every Kind of Move</div>
+    <h2 class="section-heading">What We <span>Do Best</span></h2>
+
+    <div class="service-block">
+      <div>
+        <div class="service-tag">Most Popular</div>
+        <div class="service-title">Moving to a<br>New Condo/Home?</div>
+        <p class="service-desc">Whether you're moving across the street or across the city, our GTA residential moving team handles it all. We know every condo building, elevator booking, and neighbourhood shortcut in Toronto.</p>
+        <ul style="font-size:14px; color:var(--text-light); line-height:2; padding-left:20px;">
+          <li>Condo & apartment specialists</li>
+          <li>Elevator & loading dock coordination</li>
+          <li>Full packing & unpacking available</li>
+          <li>Same-day & next-day booking</li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="#quote" class="btn-teal">Get a Quote</a>
+        </div>
+      </div>
+      <div class="service-visual">
+        <div class="service-visual-inner">
+          <svg width="120" height="100" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="30" width="100" height="70" fill="none" stroke="#1BBDB6" stroke-width="2.5"/>
+            <path d="M10 30 L60 5 L110 30" stroke="#1BBDB6" stroke-width="2.5" fill="none"/>
+            <rect x="40" y="60" width="18" height="40" fill="#C8BCA8"/>
+            <rect x="62" y="45" width="28" height="30" fill="#C8BCA8"/>
+            <rect x="65" y="48" width="10" height="10" fill="#1BBDB6" opacity="0.5"/>
+            <rect x="78" y="48" width="10" height="10" fill="#1BBDB6" opacity="0.5"/>
+            <circle cx="49" cy="95" r="3" fill="#1BBDB6"/>
+          </svg>
+          <div class="service-visual-label">Residential Moving</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-block reverse">
+      <div>
+        <div class="service-tag" style="background:var(--orange)">Single Items</div>
+        <div class="service-title">Need to Move<br>a Single Item?</div>
+        <p class="service-desc">Have a piano, sofa, or antique wardrobe that needs moving? Our single-item service is perfect when you just need one or two pieces moved safely — no minimum truck time required.</p>
+        <ul style="font-size:14px; color:var(--text-light); line-height:2; padding-left:20px;">
+          <li>Piano & specialty item experts</li>
+          <li>No minimum booking requirement</li>
+          <li>Fully insured for high-value items</li>
+          <li>Available 7 days a week</li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="#quote" class="btn-teal">Book a Pick-Up</a>
+        </div>
+      </div>
+      <div class="service-visual" style="--teal: var(--orange);">
+        <div class="service-visual-inner">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="20" width="70" height="55" rx="3" fill="none" stroke="#E8572A" stroke-width="2.5"/>
+            <path d="M15 35 L85 35" stroke="#E8572A" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <path d="M15 50 L85 50" stroke="#E8572A" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <rect x="38" y="20" width="24" height="55" fill="none" stroke="#E8572A" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <path d="M10 75 L90 75" stroke="#C8BCA8" stroke-width="2"/>
+          </svg>
+          <div class="service-visual-label">Single Item Service</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-block">
+      <div>
+        <div class="service-tag" style="background:var(--dark)">Commercial</div>
+        <div class="service-title">Want to<br>Re-Arrange Your Office?</div>
+        <p class="service-desc">Office relocations, floor reconfiguration, and commercial fit-outs across the GTA. We minimize your downtime so your team is back to work fast. Weekend and overnight moves available.</p>
+        <ul style="font-size:14px; color:var(--text-light); line-height:2; padding-left:20px;">
+          <li>Weekend & overnight scheduling</li>
+          <li>IT equipment handling specialists</li>
+          <li>Furniture disassembly & assembly</li>
+          <li>Post-move waste removal</li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="#quote" class="btn-teal">Get a Commercial Quote</a>
+        </div>
+      </div>
+      <div class="service-visual">
+        <div class="service-visual-inner">
+          <svg width="120" height="90" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="5" width="110" height="80" rx="2" fill="none" stroke="#2D2D2D" stroke-width="2.5"/>
+            <rect x="5" y="20" width="110" height="1.5" fill="#2D2D2D"/>
+            <rect x="20" y="5" width="1.5" height="15" fill="#2D2D2D"/>
+            <rect x="50" y="30" width="30" height="22" rx="1" fill="#C8BCA8"/>
+            <rect x="20" y="30" width="22" height="22" rx="1" fill="#C8BCA8"/>
+            <rect x="88" y="30" width="22" height="22" rx="1" fill="#C8BCA8"/>
+            <rect x="20" y="62" width="80" height="16" rx="1" fill="#1BBDB6" opacity="0.3"/>
+          </svg>
+          <div class="service-visual-label">Commercial Moving</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-section">
+    <div class="stat-box">
+      <div class="stat-big">12K+</div>
+      <div class="stat-label">Moves Completed</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-big">4.9★</div>
+      <div class="stat-label">Google Rating</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-big">15+</div>
+      <div class="stat-label">Years in Business</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-big">100%</div>
+      <div class="stat-label">Insured & Licensed</div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section" id="reviews">
+    <h2>The Real Truth — Customer Tales</h2>
+    <div class="testimonials-grid">
+      <div class="tcard">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"They showed up exactly on time, wrapped everything perfectly, and had us fully moved in by 3pm. The most stress-free move I've ever had in Toronto."</p>
+        <div class="author">Aisha C. <span class="author-loc">— North York → Leslieville</span></div>
+      </div>
+      <div class="tcard">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Used them for our office relocation downtown. Zero downtime, zero damage. Our team was fully operational by Monday morning. Highly recommend."</p>
+        <div class="author">Marcus R. <span class="author-loc">— King West (Office)</span></div>
+      </div>
+      <div class="tcard">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Booked same-day at 10am and the crew arrived at 2pm with everything they needed. Honestly could not believe how smooth it was."</p>
+        <div class="author">Jennifer P. <span class="author-loc">— Etobicoke → Scarborough</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE FORM + CTA -->
+  <section style="background: var(--light-bg); padding: 80px 48px;" id="quote">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;">
+      <div>
+        <div class="section-eyebrow">Shift Your Gear on Time</div>
+        <h2 class="section-heading" style="margin-bottom:24px;">Get Your <span>Free Quote</span></h2>
+        <p style="font-size:15px; color:var(--text-light); max-width:380px; line-height:1.75; margin-bottom:32px;">
+          Takes 60 seconds. Flat-rate pricing. No commitment — just a clear, honest number so you can plan your move with confidence.
+        </p>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; align-items:center; gap:14px; font-size:14px; color:var(--text);">
+            <div style="width:32px; height:32px; background:var(--teal); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:13px; flex-shrink:0;">✓</div>
+            Response within 30 minutes during business hours
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; font-size:14px; color:var(--text);">
+            <div style="width:32px; height:32px; background:var(--teal); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:13px; flex-shrink:0;">✓</div>
+            Flat-rate pricing — no surprise charges
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; font-size:14px; color:var(--text);">
+            <div style="width:32px; height:32px; background:var(--teal); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:13px; flex-shrink:0;">✓</div>
+            Same-day availability — call before noon
+          </div>
+        </div>
+        <div style="margin-top:36px; padding:24px; background:var(--dark); border-radius:2px;">
+          <p style="font-family:var(--font-head); font-weight:700; color:var(--teal); font-size:13px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:4px;">Call Us Directly</p>
+          <p style="font-family:var(--font-head); font-weight:900; color:#fff; font-size:28px; letter-spacing:-0.02em;">(416) 555-0180</p>
+          <p style="font-size:12px; color:rgba(255,255,255,0.4); margin-top:4px;">Mon–Sun, 7am – 9pm</p>
+        </div>
+      </div>
+
+      <div style="background:#fff; padding:40px; border-top: 3px solid var(--teal);">
+        <h3 style="font-family:var(--font-head); font-weight:800; font-size:22px; color:var(--dark); margin-bottom:24px;">Request a Free Quote</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div>
+            <label style="font-family:var(--font-head); font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); display:block; margin-bottom:6px;">First Name</label>
+            <input type="text" placeholder="Sarah" style="width:100%; border:1.5px solid #e0e0dc; padding:11px 14px; font-family:var(--font-body); font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='#1BBDB6'" onblur="this.style.borderColor='#e0e0dc'">
+          </div>
+          <div>
+            <label style="font-family:var(--font-head); font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); display:block; margin-bottom:6px;">Last Name</label>
+            <input type="text" placeholder="Chen" style="width:100%; border:1.5px solid #e0e0dc; padding:11px 14px; font-family:var(--font-body); font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='#1BBDB6'" onblur="this.style.borderColor='#e0e0dc'">
+          </div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="font-family:var(--font-head); font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); display:block; margin-bottom:6px;">Phone</label>
+          <input type="tel" placeholder="(416) 555-0100" style="width:100%; border:1.5px solid #e0e0dc; padding:11px 14px; font-family:var(--font-body); font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='#1BBDB6'" onblur="this.style.borderColor='#e0e0dc'">
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div>
+            <label style="font-family:var(--font-head); font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); display:block; margin-bottom:6px;">Move From</label>
+            <input type="text" placeholder="Current area" style="width:100%; border:1.5px solid #e0e0dc; padding:11px 14px; font-family:var(--font-body); font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='#1BBDB6'" onblur="this.style.borderColor='#e0e0dc'">
+          </div>
+          <div>
+            <label style="font-family:var(--font-head); font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); display:block; margin-bottom:6px;">Move To</label>
+            <input type="text" placeholder="Destination" style="width:100%; border:1.5px solid #e0e0dc; padding:11px 14px; font-family:var(--font-body); font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='#1BBDB6'" onblur="this.style.borderColor='#e0e0dc'">
+          </div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="font-family:var(--font-head); font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); display:block; margin-bottom:6px;">Move Date</label>
+          <input type="date" style="width:100%; border:1.5px solid #e0e0dc; padding:11px 14px; font-family:var(--font-body); font-size:14px; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='#1BBDB6'" onblur="this.style.borderColor='#e0e0dc'">
+        </div>
+        <div style="margin-bottom:24px;">
+          <label style="font-family:var(--font-head); font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); display:block; margin-bottom:6px;">Service Type</label>
+          <select style="width:100%; border:1.5px solid #e0e0dc; padding:11px 14px; font-family:var(--font-body); font-size:14px; outline:none; background:#fff; appearance:none; cursor:pointer;" onfocus="this.style.borderColor='#1BBDB6'" onblur="this.style.borderColor='#e0e0dc'">
+            <option>Local Move (within GTA)</option>
+            <option>Long Distance</option>
+            <option>Commercial / Office Move</option>
+            <option>Single Item Pick-Up</option>
+            <option>Packing Only</option>
+            <option>Storage</option>
+          </select>
+        </div>
+        <button class="btn-teal" style="width:100%; padding:16px; font-size:14px; font-family:var(--font-head); font-weight:800; letter-spacing:0.06em;" onclick="this.textContent='✓ Quote Request Sent!'; this.style.background='#188a84';">
+          REQUEST MY FREE QUOTE
+        </button>
+        <p style="font-size:12px; color:var(--text-light); text-align:center; margin-top:14px;">We respond within 30 minutes during business hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <div>
+      <h2>Ready to <span>Move?</span><br>Let's Make It Easy.</h2>
+      <p>Toronto's most trusted movers — licensed, insured, and locally owned since 2009.</p>
+    </div>
+    <a href="#quote" class="btn-teal-lg">Get a Free Quote →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text">Open<span>Movers</span></div>
+        <p>Toronto's most trusted moving company. Licensed, insured, and locally owned since 2009. Serving the GTA and beyond.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">Local Moves</a></li>
+          <li><a href="#">Long Distance</a></li>
+          <li><a href="#">Commercial</a></li>
+          <li><a href="#">Storage</a></li>
+          <li><a href="#">Packing</a></li>
+          <li><a href="#">Single Items</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Reviews</a></li>
+          <li><a href="#">Service Areas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">(416) 555-0180</a></li>
+          <li><a href="#">hello@openmovers.ca</a></li>
+          <li><a href="#">Toronto, ON</a></li>
+          <li><a href="#">Mon–Sun, 7am–9pm</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 OpenMovers Inc. All rights reserved.</p>
+      <p>Privacy Policy · Terms of Service · WSIB Certified</p>
+    </div>
+  </footer>
+
+  <style>
+    /* ── CHATBOT ── */
+    #chat-widget { position: fixed; bottom: 24px; right: 24px; z-index: 9999; font-family: var(--font-body); }
+
+    #chat-bubble {
+      position: absolute;
+      bottom: 76px;
+      right: 0;
+      background: #fff;
+      border-radius: 12px 12px 0 12px;
+      padding: 14px 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      width: 230px;
+      font-size: 14px;
+      color: var(--dark);
+      line-height: 1.5;
+      animation: bubblePop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+      transform-origin: bottom right;
+    }
+    #chat-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -10px; right: 18px;
+      border-left: 10px solid transparent;
+      border-top: 10px solid #fff;
+    }
+    #chat-bubble .bubble-close {
+      position: absolute;
+      top: 6px; right: 8px;
+      background: none; border: none;
+      font-size: 14px; color: #aaa;
+      cursor: pointer; padding: 2px;
+      line-height: 1;
+    }
+    #chat-bubble .bubble-close:hover { color: #666; }
+    #chat-bubble strong { color: var(--teal); }
+
+    @keyframes bubblePop {
+      from { opacity: 0; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    #chat-toggle {
+      width: 60px; height: 60px;
+      background: var(--teal);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(27,189,182,0.45);
+      transition: transform 0.2s, background 0.2s;
+      position: relative;
+    }
+    #chat-toggle:hover { transform: scale(1.08); background: var(--teal-dark); }
+    #chat-toggle svg { transition: opacity 0.2s, transform 0.2s; }
+    #chat-toggle .icon-chat { position: absolute; }
+    #chat-toggle .icon-close { position: absolute; opacity: 0; transform: rotate(-90deg); }
+    #chat-widget.open #chat-toggle .icon-chat { opacity: 0; transform: rotate(90deg); }
+    #chat-widget.open #chat-toggle .icon-close { opacity: 1; transform: rotate(0deg); }
+
+    #chat-notif {
+      position: absolute;
+      top: -4px; right: -4px;
+      width: 18px; height: 18px;
+      background: var(--orange);
+      border-radius: 50%;
+      border: 2px solid #fff;
+      font-size: 10px;
+      font-weight: 800;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head);
+    }
+
+    #chat-panel {
+      position: absolute;
+      bottom: 76px; right: 0;
+      width: 360px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      max-height: 540px;
+    }
+    #chat-widget.open #chat-panel { display: flex; animation: bubblePop 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+    .chat-header {
+      background: var(--teal);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .chat-avatar {
+      width: 42px; height: 42px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .chat-header-info h4 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 15px;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .chat-header-info p { font-size: 12px; color: rgba(255,255,255,0.8); }
+    .online-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      background: #5DFF8A;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #F8F8F6;
+      scrollbar-width: thin;
+      scrollbar-color: #ddd transparent;
+    }
+
+    .msg {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      max-width: 90%;
+    }
+    .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .msg-avatar {
+      width: 28px; height: 28px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .msg-bubble {
+      background: #fff;
+      border-radius: 16px 16px 16px 4px;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: var(--dark);
+      line-height: 1.55;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    .msg.user .msg-bubble {
+      background: var(--teal);
+      color: #fff;
+      border-radius: 16px 16px 4px 16px;
+    }
+    .msg-time {
+      font-size: 10px;
+      color: #bbb;
+      margin-top: 3px;
+      text-align: right;
+    }
+    .msg.user .msg-time { text-align: right; }
+
+    .typing-indicator .msg-bubble {
+      display: flex; gap: 5px; align-items: center;
+      padding: 12px 16px;
+    }
+    .dot-flashing { display: flex; gap: 4px; }
+    .dot-flashing span {
+      width: 6px; height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: dotBounce 1.2s infinite ease-in-out;
+    }
+    .dot-flashing span:nth-child(2) { animation-delay: 0.2s; }
+    .dot-flashing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dotBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    .chat-quick-replies {
+      padding: 10px 16px 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: #F8F8F6;
+    }
+    .quick-reply {
+      background: #fff;
+      border: 1.5px solid var(--teal);
+      color: var(--teal);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: var(--font-head);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .quick-reply:hover { background: var(--teal); color: #fff; }
+
+    .chat-input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
+    #chat-input {
+      flex: 1;
+      border: 1.5px solid #e0e0dc;
+      border-radius: 24px;
+      padding: 9px 16px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--dark);
+      outline: none;
+      transition: border-color 0.2s;
+      background: #F8F8F6;
+    }
+    #chat-input:focus { border-color: var(--teal); background: #fff; }
+    #chat-send {
+      width: 38px; height: 38px;
+      background: var(--teal);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s, transform 0.15s;
+    }
+    #chat-send:hover { background: var(--teal-dark); transform: scale(1.08); }
+    #chat-send svg { width: 16px; height: 16px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero-left { padding: 60px 24px 48px; }
+      .service-block { grid-template-columns: 1fr !important; gap: 32px; direction: ltr !important; }
+      .how-steps { grid-template-columns: 1fr !important; }
+      .trust-bar { grid-template-columns: 1fr 1fr; }
+      .stats-section { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .cta-band { grid-template-columns: 1fr; text-align: center; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      #quote > div { grid-template-columns: 1fr !important; gap: 40px; }
+      .services-section { padding: 56px 24px; }
+      .how-section { padding: 56px 24px; }
+      .testimonials-section { padding: 56px 24px; }
+      footer { padding: 48px 24px 0; }
+      .footer-bottom { margin: 0 -24px; padding: 16px 24px; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; height: 60px; }
+      .nav-cta-btn { padding: 8px 14px; font-size: 12px; }
+      .hero { padding: 48px 20px 0; }
+      .hero-left { padding: 0 0 48px; }
+      .hero-title { font-size: 44px; }
+      .hero-btns { flex-direction: column; align-items: stretch; }
+      .btn-teal, .btn-outline { text-align: center; }
+      .trust-bar { grid-template-columns: 1fr; }
+      .trust-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .stats-section { grid-template-columns: 1fr 1fr; }
+      .stat-big { font-size: 36px; }
+      .stat-box { padding: 28px 16px; }
+      .services-section { padding: 48px 20px; }
+      .how-section { padding: 48px 20px; }
+      .testimonials-section { padding: 48px 20px; }
+      .cta-band { padding: 56px 20px; gap: 28px; }
+      .cta-band h2 { font-size: 30px; }
+      .btn-teal-lg { width: 100%; text-align: center; }
+      footer { padding: 48px 20px 0; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 6px; text-align: center; margin: 0 -20px; padding: 16px 20px; }
+      #chat-panel { width: calc(100vw - 32px); }
+      #chat-widget { right: 16px; bottom: 16px; }
+    }
+  </style>
+
+  <div id="chat-widget">
+    <div id="chat-bubble">
+      <button class="bubble-close" onclick="document.getElementById('chat-bubble').style.display='none'">✕</button>
+      👋 <strong>Hey there!</strong> Planning a move in Toronto? I can help with quotes, services, and any questions!
+    </div>
+
+    <div id="chat-panel">
+      <div class="chat-header">
+        <div class="chat-avatar">🐻</div>
+        <div class="chat-header-info">
+          <h4>OpenMovers Assistant</h4>
+          <p><span class="online-dot"></span>Online now · Replies instantly</p>
+        </div>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <div class="msg bot">
+          <div class="msg-avatar">🐻</div>
+          <div>
+            <div class="msg-bubble">Hi! I'm the OpenMovers assistant. How can I help with your move today? 🚛</div>
+            <div class="msg-time">Just now</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-quick-replies" id="quick-replies">
+        <button class="quick-reply" onclick="sendQuick(this)">Get a quote</button>
+        <button class="quick-reply" onclick="sendQuick(this)">How much does it cost?</button>
+        <button class="quick-reply" onclick="sendQuick(this)">Do you move condos?</button>
+        <button class="quick-reply" onclick="sendQuick(this)">Same-day available?</button>
+      </div>
+
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Type a message…" onkeydown="if(event.key==='Enter') sendChat()">
+        <button id="chat-send" onclick="sendChat()">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 2L11 13" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <button id="chat-toggle" onclick="toggleChat()" aria-label="Open chat">
+      <svg class="icon-chat" width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg class="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <div id="chat-notif">1</div>
+    </button>
+  </div>
+
+  <script>
+    window.addEventListener('load', function() {
+      var heroLeft = document.querySelector('.hero-left');
+      if (heroLeft) heroLeft.classList.add('animate');
+
+      // Auto-hide bubble after 8s
+      setTimeout(function() {
+        var b = document.getElementById('chat-bubble');
+        if (b) b.style.display = 'none';
+      }, 8000);
+    });
+
+    function toggleChat() {
+      var w = document.getElementById('chat-widget');
+      var bubble = document.getElementById('chat-bubble');
+      var notif = document.getElementById('chat-notif');
+      w.classList.toggle('open');
+      if (bubble) bubble.style.display = 'none';
+      if (notif) notif.style.display = 'none';
+    }
+
+    function getTime() {
+      return new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+
+    function appendMsg(text, role) {
+      var msgs = document.getElementById('chat-messages');
+      var div = document.createElement('div');
+      div.className = 'msg ' + role;
+      if (role === 'bot') {
+        div.innerHTML = '<div class="msg-avatar">🐻</div><div><div class="msg-bubble">' + text + '</div><div class="msg-time">' + getTime() + '</div></div>';
+      } else {
+        div.innerHTML = '<div><div class="msg-bubble">' + text + '</div><div class="msg-time">' + getTime() + '</div></div>';
+      }
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+      return div;
+    }
+
+    function showTyping() {
+      var msgs = document.getElementById('chat-messages');
+      var div = document.createElement('div');
+      div.className = 'msg bot typing-indicator';
+      div.id = 'typing';
+      div.innerHTML = '<div class="msg-avatar">🐻</div><div class="msg-bubble"><div class="dot-flashing"><span></span><span></span><span></span></div></div>';
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function removeTyping() {
+      var t = document.getElementById('typing');
+      if (t) t.remove();
+    }
+
+    function sendQuick(btn) {
+      var text = btn.textContent;
+      document.getElementById('quick-replies').style.display = 'none';
+      sendMessage(text);
+    }
+
+    function sendChat() {
+      var input = document.getElementById('chat-input');
+      var text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      document.getElementById('quick-replies').style.display = 'none';
+      sendMessage(text);
+    }
+
+    async function sendMessage(text) {
+      appendMsg(text, 'user');
+      showTyping();
+
+      var systemPrompt = "You are a friendly, helpful assistant for OpenMovers, a Toronto-based moving company. Keep answers short (2-3 sentences max). Be warm and conversational. Key facts: local moves start at $99/hr, long distance quotes by request, same-day available if booked before noon, fully licensed & insured, 4.9★ Google rating, 12,000+ moves, 15 years in business, phone (416) 555-0180, email hello@openmovers.ca, serve all of the GTA. Always encourage getting a free quote at the website. If asked about pricing, give a ballpark and suggest getting a free quote.";
+
+      try {
+        var reply = await window.claude.complete({
+          messages: [{ role: 'user', content: text }],
+          system: systemPrompt
+        });
+        removeTyping();
+        appendMsg(reply, 'bot');
+      } catch(e) {
+        removeTyping();
+        appendMsg("Sorry, I'm having trouble connecting right now. Please call us at (416) 555-0180 or fill out the quote form on the page!", 'bot');
+      }
+    }
+  </script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel">
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "tealColor": "#1BBDB6",
+      "orangeColor": "#E8572A",
+      "heroBg": "#C4B9A5",
+      "heroHeadline": "BIG OR SMALL"
+    }/*EDITMODE-END*/;
+
+    function TweaksApp() {
+      const [tweaks, setTweak] = window.useTweaks(TWEAK_DEFAULTS);
+      const { TweaksPanel, TweakSection, TweakColor } = window;
+
+      React.useEffect(() => {
+        document.documentElement.style.setProperty('--teal', tweaks.tealColor);
+        document.documentElement.style.setProperty('--teal-dark', tweaks.tealColor + 'cc');
+        document.documentElement.style.setProperty('--orange', tweaks.orangeColor);
+        document.documentElement.style.setProperty('--hero-bg', tweaks.heroBg);
+      }, [tweaks]);
+
+      return (
+        <TweaksPanel title="Tweaks">
+          <TweakSection label="Colors">
+            <TweakColor label="Teal Accent" value={tweaks.tealColor} onChange={v => setTweak('tealColor', v)} />
+            <TweakColor label="Orange Accent" value={tweaks.orangeColor} onChange={v => setTweak('orangeColor', v)} />
+            <TweakColor label="Hero Background" value={tweaks.heroBg} onChange={v => setTweak('heroBg', v)} />
+          </TweakSection>
+        </TweaksPanel>
+      );
+    }
+
+    const root = document.createElement('div');
+    document.body.appendChild(root);
+    ReactDOM.createRoot(root).render(<TweaksApp />);
+  </script>
+
+</body>
+</html>
