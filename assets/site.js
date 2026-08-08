@@ -23,8 +23,8 @@
       '<a class="skip-link" href="#main-content">Skip to content</a>',
       '<header class="site-header">',
         '<div class="utility-bar"><div class="shell utility-inner">',
-          '<p>Local moves · Long distance · Residential · Commercial · Packing</p>',
-          '<p>Toronto, GTA &amp; beyond &nbsp;·&nbsp; <a href="tel:', PHONE_LINK, '">', PHONE_DISPLAY, '</a></p>',
+          '<p class="utility-status"><span aria-hidden="true"></span>Serving Toronto, the GTA &amp; beyond</p>',
+          '<div class="utility-links"><span>Mon–Sun · 7:00 AM–9:00 PM</span><a href="https://wa.me/16478069453" target="_blank" rel="noopener">WhatsApp us ↗</a></div>',
         '</div></div>',
         '<div class="shell nav-wrap">',
           '<a class="brand" href="/" aria-label="OpenMovers Toronto home">',
@@ -34,8 +34,8 @@
           '<nav class="main-nav" id="main-navigation" aria-label="Main navigation">',
             navLink('/about/', 'About', 'about'),
             '<div class="nav-drop">',
-              '<button class="nav-drop-button" type="button" aria-label="Browse moving services">Services</button>',
-              '<div class="nav-dropdown">',
+              '<button class="nav-drop-button" type="button" aria-expanded="false" aria-controls="service-navigation">Services</button>',
+              '<div class="nav-dropdown" id="service-navigation">',
                 '<a href="/services/">All services</a>',
                 '<a href="/services/local-moving/">Local moving</a>',
                 '<a href="/services/long-distance/">Long-distance moving</a>',
@@ -53,8 +53,8 @@
             '</div>',
           '</nav>',
           '<div class="nav-actions">',
-            '<a class="phone-link" href="tel:', PHONE_LINK, '">', PHONE_DISPLAY, '</a>',
-            '<a class="button button-small" href="/quote/">Free quote</a>',
+            '<a class="nav-phone" href="tel:', PHONE_LINK, '"><span>Call for a quote</span><strong>(647) 806-9453</strong></a>',
+            '<a class="button button-small" href="/quote/">Get a quote</a>',
           '</div>',
           '<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Open menu"><span></span></button>',
         '</div>',
@@ -120,6 +120,15 @@
       var open = document.body.classList.toggle('menu-open');
       menuToggle.setAttribute('aria-expanded', String(open));
       menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+  }
+
+  var serviceToggle = document.querySelector('.nav-drop-button');
+  var serviceMenu = document.querySelector('.nav-drop');
+  if (serviceToggle && serviceMenu) {
+    serviceToggle.addEventListener('click', function () {
+      var open = serviceMenu.classList.toggle('is-open');
+      serviceToggle.setAttribute('aria-expanded', String(open));
     });
   }
 
